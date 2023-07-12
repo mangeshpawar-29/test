@@ -1,6 +1,6 @@
 ---
 - name: Install Docker
-  hosts: 172.31.17.114
+  hosts: slave
   become: yes
 
   tasks:
