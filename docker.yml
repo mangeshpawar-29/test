@@ -1,6 +1,7 @@
 ---
 - name: Install Docker
   hosts: slave
+  gather_facts: False
   become: yes
 
   tasks:
