@@ -1,6 +1,6 @@
 ---
 - name: Install Docker
-  hosts: 172.31.85.129
+  hosts: 172.31.84.82
   become: False
 
   tasks:
