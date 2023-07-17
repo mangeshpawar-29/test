@@ -1,30 +1,32 @@
 ---
 - name: Install Docker
   hosts: 172.31.84.82
-  become: False
+  become: true
 
   tasks:
     - name: Install Docker dependencies
-      apt:
-        name: "{{ item }}"
+      yum:
+        name:
+          - yum-utils
+          - device-mapper-persistent-data
+          - lvm2
         state: present
-      with_items:
-        - apt-transport-https
-        - ca-certificates
-        - curl
-        - software-properties-common
 
-    - name: Add Docker GPG key
-      apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
+    - name: Add Docker repository GPG key
+      rpm_key:
+        key: https://download.docker.com/linux/centos/gpg
         state: present
 
     - name: Add Docker repository
-      apt_repository:
-        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
-        state: present
+      yum_repository:
+        name: docker-ce
+        description: Docker CE Repository
+        baseurl: https://download.docker.com/linux/centos/7/x86_64/stable
+        gpgcheck: yes
+        gpgkey: https://download.docker.com/linux/centos/gpg
+        enabled: yes
 
-    - name: Update apt and install Docker
-      apt:
+    - name: Install Docker
+      yum:
         name: docker-ce
         state: present
